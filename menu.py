@@ -1,14 +1,13 @@
 import tkinter as tk
 from tkinter import messagebox
-from PIL import Image, ImageTk
 
 # Função para adicionar um produto à lista de compras
-def add_to_shopping_list(product):
+def add_to_shopping_list(produto):
     # Adiciona o produto à lista de compras
-    shopping_list_box.insert(tk.END, product)
+    shopping_list_box.insert(tk.END, produto)
     
     # Exibe uma mensagem para o cliente
-    messagebox.showinfo("Produto Adicionado", f"{product} foi adicionado à lista de compras!")
+    messagebox.showinfo("Produto Adicionado", f"{produto} foi adicionado à lista de compras!")
 
 # Configuração da tela principal do sistema
 root_main = tk.Tk()
@@ -20,33 +19,31 @@ label_title_main = tk.Label(root_main, text="Bem-vindo ao Sistema de Compras", f
 label_title_main.pack(pady=20)
 
 # Lista de produtos do supermercado
-label_products = tk.Label(root_main, text="Lista de Produtos", font=("Helvetica", 16))
-label_products.pack()
+label_produto = tk.Label(root_main, text="Lista de Produtos", font=("Helvetica", 16))
+label_produto.pack()
 
-# Carrega imagens dos produtos
-image_arroz = Image.open("arroz.png")  # Substitua "arroz.png" pelo nome da sua imagem de arroz
-image_feijao = Image.open("feijao.png")  # Substitua "feijao.png" pelo nome da sua imagem de feijão
-image_macarrao = Image.open("macarrao.png")  # Substitua "macarrao.png" pelo nome da sua imagem de macarrão
+produto = [
+    "Arroz",
+    "Feijão",
+    "Macarrão",
+    "Óleo de Soja",
+    "Leite",
+    "Café",
+    "Açúcar",
+    "Sal",
+    "Farinha de Trigo",
+    "Ovos",
+    "Tomate",
+    "Cebola",
+    "Batata",
+    "Banana",
+    "Maçã",
+    "Laranja"
+]
 
-# Redimensiona as imagens para caber nos botões
-image_arroz = image_arroz.resize((100, 100), Image.ANTIALIAS)
-image_feijao = image_feijao.resize((100, 100), Image.ANTIALIAS)
-image_macarrao = image_macarrao.resize((100, 100), Image.ANTIALIAS)
-
-# Converte as imagens para o formato Tkinter
-photo_arroz = ImageTk.PhotoImage(image_arroz)
-photo_feijao = ImageTk.PhotoImage(image_feijao)
-photo_macarrao = ImageTk.PhotoImage(image_macarrao)
-
-# Botões com imagens
-button_arroz = tk.Button(root_main, image=photo_arroz, command=lambda: add_to_shopping_list("Arroz"))
-button_arroz.pack(pady=5)
-
-button_feijao = tk.Button(root_main, image=photo_feijao, command=lambda: add_to_shopping_list("Feijão"))
-button_feijao.pack(pady=5)
-
-button_macarrao = tk.Button(root_main, image=photo_macarrao, command=lambda: add_to_shopping_list("Macarrão"))
-button_macarrao.pack(pady=5)
+for produto in produto:
+    button_product = tk.Button(root_main, text=produto, command=lambda p=produto: add_to_shopping_list(p))
+    button_product.pack(pady=5)
 
 # Lista de compras
 label_shopping_list = tk.Label(root_main, text="Lista de Compras", font=("Helvetica", 16))

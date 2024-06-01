@@ -3,10 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Aplicação Web</title>
+    <title>Sistema de Compras</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .products, .shopping-list {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bem-vindo à minha aplicação web!</h1>
-    <p>Esta é uma página HTML renderizada pelo Flask.</p>
+    <div class="container">
+        <h1 class="text-center">Bem-vindo ao Sistema de Compras</h1>
+        <div class="products">
+            <h2>Lista de Produtos</h2>
+            <div class="row" id="product-buttons"></div>
+        </div>
+        <div class="shopping-list">
+            <h2>Lista de Compras</h2>
+            <ul class="list-group" id="shopping-list"></ul>
+        </div>
+        <button class="btn btn-danger mt-3" onclick="exitSystem()">Sair</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const products = [
+            "Arroz", "Feijão", "Macarrão", "Óleo de Soja", "Leite",
+            "Café", "Açúcar", "Sal", "Farinha de Trigo", "Ovos",
+            "Tomate", "Cebola", "Batata", "Banana", "Maçã", "Laranja"
+        ];
+
+        function createProductButtons() {
+            const productButtonsDiv = $('#product-buttons');
+            products.forEach(product => {
+                const button = $(`<button class="btn btn-primary m-2">${product}</button>`);
+                button.click(() => addProductToList(product));
+                productButtonsDiv.append($('<div class="col-md-2"></div>').append(button));
+            });
+        }
+
+        function addProductToList(product) {
+            $.post('/add_product', { product: product }, (data) => {
+                if (data.message) {
+                    alert(data.message);
+                    updateShoppingList(data.shopping_list);
+                } else {
+                    alert(data.error);
+                }
+            });
+        }
+
+        function updateShoppingList(shoppingList) {
+            const shoppingListUl = $('#shopping-list');
+            shoppingListUl.empty();
+            shoppingList.forEach(item => {
+                const li = $(`<li class="list-group-item">${item}</li>`);
+                shoppingListUl.append(li);
+            });
+        }
+
+        function exitSystem() {
+            alert('Saindo do sistema...');
+            // Adicione a funcionalidade de sair do sistema aqui
+        }
+
+        $(document).ready(() => {
+            createProductButtons();
+        });
+    </script>
 </body>
 </html>
