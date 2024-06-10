@@ -1,0 +1,4 @@
+2024-05-25 16:05:22,840 - login_success - User: Tayna, IP: 10.0.0.199
+2024-05-25 16:11:44,841 - login_failed - User: usuario, IP: 10.0.0.199
+2024-05-25 16:11:57,169 - login_success - User: Tayna, IP: 10.0.0.199
+2024-05-25 16:31:05,651 - login_success - User: Tayna, IP: 10.0.0.199

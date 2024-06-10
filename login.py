@@ -5,6 +5,22 @@ import json
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import socket
+
+def get_ip():
+    try:
+        # Crie um soquete de internet TCP
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # Conecte o soquete a um endereço remoto (não precisa ser válido)
+        s.connect(("8.8.8.8", 80))
+        # Obtenha o IP do socket
+        ip = s.getsockname()[0]
+        # Feche o soquete
+        s.close()
+        return ip
+    except Exception as e:
+        print(f"Falha ao obter o IP: {e}")
+        return "127.0.0.1"  # Retorna um IP padrão em caso de falha
 
 # Configurações do email
 EMAIL = "renantaynaerik2@gmail.com"  
@@ -31,7 +47,7 @@ def enviar_email(assunto, corpo):
 
 # Função para registrar acessos e erros
 def registrar_evento(nome_usuario, evento):
-    ip = "127.0.0.1"  # Aqui você pode adicionar lógica para obter o IP real
+    ip = get_ip()  # Obter o IP real do usuário
     entrada_log = {
         "nome": nome_usuario,
         "evento": evento,
